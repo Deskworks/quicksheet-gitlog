@@ -20,14 +20,15 @@ class Program
                 var root = doc.RootElement;
                 string type = root.TryGetProperty("type", out var t) ? t.GetString() ?? "" : "";
 
-                if (type == "init" || type == "activate")
+                if (type == "init")
                 {
-                    var resp = new { type = "status", status = "ready" };
+                    var resp = new { type = "register", name = "quicksheet-gitlog", version = "1.0.0", prefix = "gitlog" };
                     Console.WriteLine(JsonSerializer.Serialize(resp));
                     Console.Out.Flush();
                 }
-                else if (type == "request")
+                else if (type == "activate")
                 {
+                    string id = root.TryGetProperty("id", out var idEl) ? idEl.GetString() ?? "" : "";
                     string param = "";
                     if (root.TryGetProperty("params", out var paramsEl) && paramsEl.ValueKind == JsonValueKind.Array)
                     {
@@ -41,7 +42,7 @@ class Program
                     }
 
                     var cells = GetGitLog(param.Trim());
-                    var response = new { type = "response", cells };
+                    var response = new { type = "write", id, cells };
                     Console.WriteLine(JsonSerializer.Serialize(response));
                     Console.Out.Flush();
                 }
