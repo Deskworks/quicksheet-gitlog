@@ -7,5 +7,5 @@
   "entry": "dotnet run --project .",
   "params": ["path_or_count"],
   "protocol": "jsonlines-v1",
-  "repository": "https://github.com/cemheren/quicksheet-gitlog"
+  "repository": "https://github.com/Deskworks/quicksheet-gitlog"
 }
